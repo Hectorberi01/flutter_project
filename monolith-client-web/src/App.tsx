@@ -16,7 +16,7 @@ import type { ReactNode } from 'react'
 function RequireAuth({ children }: { children: ReactNode }) {
   const { user, isLoading } = useAuth()
   if (isLoading) return <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}><Spinner size={32} /></div>
-  if (!user) return <Navigate to="/connexion" replace />
+  if (!user) return <Navigate to="/connexion" state={{ from: location.pathname }} replace />
   return <>{children}</>
 }
 
@@ -27,7 +27,7 @@ function AppRoutes() {
   return (
     <Routes>
       {/* Auth (sans layout) */}
-      <Route path="/connexion"  element={<LoginPage />} />
+      <Route path="/connexion" element={<LoginPage />} />
       <Route path="/inscription" element={<RegisterPage />} />
 
       {/* Public avec layout */}
