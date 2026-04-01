@@ -28,7 +28,7 @@ export default function ProductDetailPage() {
   }, [id])
 
   const handleAddToCart = async () => {
-    if (!user) { navigate('connexion'); return }
+    if (!user) { navigate('/connexion'); return }
     setAdding(true)
     try {
       await addItem(product!.id, qty)
@@ -39,7 +39,7 @@ export default function ProductDetailPage() {
   }
 
   const handleFav = async () => {
-    if (!user) { navigate('connexion'); return }
+    if (!user) { navigate('/connexion'); return }
     try {
       const res = await favoritesApi.toggle(product!.id)
       setIsFav(res.added)
