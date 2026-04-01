@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { useParams, Link } from 'react-router-dom'
+import { useParams, Link, useNavigate } from 'react-router-dom'
 import { ArrowLeft, Heart, ShoppingCart, Truck, Shield, ChevronRight } from 'lucide-react'
 import { productsApi, favoritesApi } from '../api'
 import { useAuth } from '../context/AuthContext'
@@ -8,6 +8,7 @@ import { Button, Spinner, Toast, formatPrice } from '../components/ui'
 import type { Product } from '../types'
 
 export default function ProductDetailPage() {
+  const navigate = useNavigate()
   const { id } = useParams<{ id: string }>()
   const { user } = useAuth()
   const { addItem } = useCart()
@@ -27,7 +28,7 @@ export default function ProductDetailPage() {
   }, [id])
 
   const handleAddToCart = async () => {
-    if (!user) { window.location.href = '/connexion'; return }
+    if (!user) { navigate('connexion'); return }
     setAdding(true)
     try {
       await addItem(product!.id, qty)
@@ -38,7 +39,7 @@ export default function ProductDetailPage() {
   }
 
   const handleFav = async () => {
-    if (!user) { window.location.href = '/connexion'; return }
+    if (!user) { navigate('connexion'); return }
     try {
       const res = await favoritesApi.toggle(product!.id)
       setIsFav(res.added)
